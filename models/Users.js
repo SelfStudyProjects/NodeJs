@@ -1,3 +1,5 @@
+//  git add . 명령어 입력해보기기
+
 const mongoose = require('mongoose')
 
 const userSchema = new mongoose.Schema({
