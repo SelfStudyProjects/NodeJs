@@ -1,6 +1,8 @@
 const express = require('express')
 const app = express()
-const port = 3000
+const port = 3001
+
+const config = require('./config/key')
 const bodyParser = require('body-parser')
 const { User } = require('./models/Users')
 
@@ -16,7 +18,7 @@ const connectOptions = {
     useUnifiedTopology: true
 }
 
-mongoose.connect('mongodb+srv://jerry:tj2364458@cluster0.g2sqe.mongodb.net/project_0?retryWrites=true&w=majority&appName=Cluster0', connectOptions)
+mongoose.connect(config.mongoURI, connectOptions)
     .then(() => console.log('MongoDB Connected Successfully...'))
     .catch(err => console.log('MongoDB Connection Error:', err))
     
@@ -40,4 +42,4 @@ app.post('/register', (req, res) => {
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)
-})
+}) 
