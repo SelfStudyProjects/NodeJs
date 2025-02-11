@@ -15,7 +15,9 @@ mongoose.set('strictQuery', false)  // 경고 메시지 제거
 // 연결 옵션 설정
 const connectOptions = {
     useNewUrlParser: true,
-    useUnifiedTopology: true
+    useUnifiedTopology: true,
+    retryWrites: true,
+    w: 'majority'
 }
 
 mongoose.connect(config.mongoURI, connectOptions)
@@ -33,9 +35,13 @@ app.post('/register', (req, res) => {
     const user = new User(req.body)
 
     user.save((err, doc) => {
-        if(err) return res.json({ success: false, err })
+        if(err) {
+            console.log('Save Error:', err);  // 에러 로깅 추가
+            return res.json({ success: false, err })
+        }
         return res.status(200).json({
-            success: true
+            success: true,
+            userData: doc
         })
     })
 })
